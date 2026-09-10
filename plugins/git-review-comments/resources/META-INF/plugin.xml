@@ -42,10 +42,12 @@
   </extensions>
 
   <actions>
-    <action id="Git.Review.FinishReview" class="com.intellij.vcs.git.review.comments.FinishReviewAction">
+    <action id="Git.Review.FinishReview" class="com.intellij.vcs.git.review.comments.FinishReviewAction"
+            icon="AllIcons.Actions.Commit">
       <add-to-group group-id="Diff.ViewerToolbar" anchor="last"/>
     </action>
-    <action id="Git.Review.FinishGlobalReview" class="com.intellij.vcs.git.review.comments.FinishGlobalReviewAction">
+    <action id="Git.Review.FinishGlobalReview" class="com.intellij.vcs.git.review.comments.FinishGlobalReviewAction"
+            icon="AllIcons.Actions.Commit">
       <add-to-group group-id="ChangesViewToolbar" anchor="after" relative-to-action="Diff.ShowDiff"/>
     </action>
   </actions>
