@@ -11,7 +11,7 @@ internal class RebasedExternalResourceUrls : IntelliJIdeaExternalResourceUrls() 
     }
 
   override val productPageUrl: Url
-    get() = Urls.newFromEncoded("https://github.com/detachhead/rebased")
+    get() = Urls.newFromEncoded("https://github.com/hackmajoris/rebased")
 
   override val bugReportUrl
     get() = { description: String ->
