@@ -96,6 +96,19 @@ One of the goals of Rebased is to prevent users from having to install bloated p
 
 (currently only one language, but feel free to open an [issue](https://github.com/hackmajoris/rebased/issues/new/choose) or [PR](https://github.com/hackmajoris/rebased/compare) for others)
 
+## Fork Features
+
+Features added in this fork ([hackmajoris/rebased](https://github.com/hackmajoris/rebased)) that aren't in upstream. New features land here going forward.
+
+### Inline diff review comments
+
+Local Changes diffs get a per-line gutter "add comment" affordance, like a GitHub/GitLab PR review, instead of being read-only. Double-click a changed file (or "Show Diff") to open it.
+
+- Comments accumulate in a project-wide store as diffs are opened — no dedicated "start review" action needed.
+- **Finish Review** (Local Changes toolbar) exports all accumulated comments to `.git/review-comments.json` and clears the store.
+- `rebased review [<ref>]` opens a dedicated multi-file diff session for a whole changeset (uncommitted changes by default, or a ref/range), with its own Finish Review action.
+- Paired with the [`rebased-review`](https://github.com/hackmajoris/skills/blob/main/skills/rebased-review/SKILL.md) Claude Code skill, which drives a comment → fix → re-review loop end to end.
+
 ## Plugins
 
 ### Compatibility disclaimer
