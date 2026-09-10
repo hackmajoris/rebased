@@ -20,4 +20,3 @@ jobs:
         brew tap hackmajoris/apps
         brew trust hackmajoris/apps
         brew bump-cask-pr rebased --version $version
-	
