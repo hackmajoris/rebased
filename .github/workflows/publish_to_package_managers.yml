@@ -2,6 +2,11 @@ name: Publish to package managers
 on:
   release:
     types: [released]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'release tag to publish (e.g. 1.0.1)'
+        required: true
 jobs:
   homebrew:
     runs-on: macos-latest
@@ -10,10 +15,7 @@ jobs:
       env:
         # zizmor: ignore[secrets-outside-env] TODO
         HOMEBREW_GITHUB_API_TOKEN: "${{ secrets.HOMEBREW_TOKEN }}"
-        version: ${{ github.event.release.tag_name }}
-      # macos-latest runners ship with Homebrew preinstalled -- no need to check out a
-      # separate brew binary, and `trust` isn't a stock Homebrew command anyway (it's
-      # from Workbrew, a different product), so it's dropped here.
+        version: ${{ github.event.release.tag_name || github.event.inputs.version }}
       run: |
         brew tap hackmajoris/apps
         brew bump-cask-pr rebased --version $version
