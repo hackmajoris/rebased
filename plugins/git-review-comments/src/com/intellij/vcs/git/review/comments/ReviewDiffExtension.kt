@@ -3,6 +3,7 @@ package com.intellij.vcs.git.review.comments
 
 import com.intellij.collaboration.ui.codereview.comment.CodeReviewCommentUIUtil
 import com.intellij.collaboration.ui.codereview.diff.DiffLineLocation
+import com.intellij.icons.AllIcons
 import com.intellij.collaboration.ui.codereview.diff.viewer.showCodeReview
 import com.intellij.collaboration.ui.codereview.editor.CodeReviewEditorGutterControlsModel
 import com.intellij.collaboration.ui.codereview.editor.CodeReviewEditorInlaysModel
@@ -20,6 +21,7 @@ import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.util.Key
 import com.intellij.openapi.vcs.changes.CurrentContentRevision
 import com.intellij.openapi.vcs.changes.actions.diff.ChangeDiffRequestProducer
+import com.intellij.ui.InplaceButton
 import com.intellij.ui.JBColor
 import com.intellij.ui.components.JBLabel
 import com.intellij.util.cancelOnDispose
@@ -35,6 +37,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
+import java.awt.BorderLayout
+import javax.swing.JPanel
 import kotlinx.coroutines.withContext
 import java.io.File
 
@@ -108,12 +112,19 @@ class ReviewDiffExtension : DiffExtension() {
             }
           },
           rendererFactory = { inlay ->
-            ComponentInlayRenderer(
-              CodeReviewCommentUIUtil.createEditorInlayPanel(
-                JBLabel(inlay.text).apply { border = JBUI.Borders.empty(4, 8) },
-                tint = JBColor.YELLOW,
-              ),
-            )
+            val label = JBLabel(inlay.text).apply { border = JBUI.Borders.empty(4, 8) }
+            val deleteButton = InplaceButton(
+              GitReviewCommentsBundle.message("review.comment.delete.tooltip"),
+              AllIcons.Actions.Close,
+            ) {
+              store.removeComment(inlay.comment)
+            }.apply { setIcons(AllIcons.Actions.Close, AllIcons.Actions.Close, AllIcons.Actions.CloseHovered) }
+            val content = JPanel(BorderLayout()).apply {
+              isOpaque = false
+              add(label, BorderLayout.CENTER)
+              add(deleteButton, BorderLayout.EAST)
+            }
+            ComponentInlayRenderer(CodeReviewCommentUIUtil.createEditorInlayPanel(content, tint = JBColor.YELLOW))
           },
         )
       }
@@ -264,7 +275,7 @@ internal class InMemoryReviewEditorModel(
  * The comment's file/line/side/text are immutable once added (this extension has no comment
  * editing), so [line]/[isVisible] are fixed at construction rather than reactive.
  */
-internal class InMemoryCommentInlay(comment: ReviewComment, lineIdx: Int) : CodeReviewInlayModel {
+internal class InMemoryCommentInlay(val comment: ReviewComment, lineIdx: Int) : CodeReviewInlayModel {
   override val key: Any = comment
   val text: String = comment.text
   override val line: StateFlow<Int?> = MutableStateFlow(lineIdx)
