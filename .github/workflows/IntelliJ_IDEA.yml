@@ -6,6 +6,8 @@ on:
     branches:
       - master
       - release/*
+    tags:
+      - '*'
 
   # we only run on pull_request when the source branch name doesn't start with "release/". unfortunately branches-ignore refers to
   # the source branch not the target branch so we can't do that here. we use an `if` statement in the get_version job instead
@@ -25,13 +27,15 @@ jobs:
       version: ${{ steps.get_version.outputs.version }}
     steps:
       - uses: actions/checkout@v4.2.2
-        # checkout only needed to read build.txt. if run manually we specify the version as an input value
-        if: github.event_name != 'workflow_dispatch'
+        # checkout only needed to read build.txt. if run manually or from a tag we specify the version another way
+        if: github.event_name != 'workflow_dispatch' && !startsWith(github.ref, 'refs/tags/')
       - name: get build number
         id: get_version
         run: |
           if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
             version=${{ inputs.version }}
+          elif [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            version="${GITHUB_REF#refs/tags/}"
           else
             version="$(cat build.txt)"
           fi
@@ -52,7 +56,7 @@ jobs:
     needs:
       - get_version
       - build
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/download-artifact@v4.1.8
 
@@ -74,4 +78,3 @@ jobs:
             **/*.win.zip
             **/*.dmg
             **/*.spdx.json
-            
