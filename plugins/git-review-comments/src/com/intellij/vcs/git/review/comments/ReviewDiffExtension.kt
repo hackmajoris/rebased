@@ -124,7 +124,7 @@ class ReviewDiffExtension : DiffExtension() {
               add(label, BorderLayout.CENTER)
               add(deleteButton, BorderLayout.EAST)
             }
-            ComponentInlayRenderer(CodeReviewCommentUIUtil.createEditorInlayPanel(content, tint = JBColor.YELLOW))
+            ComponentInlayRenderer(CodeReviewCommentUIUtil.createEditorInlayPanel(content, tint = JBColor.BLUE))
           },
         )
       }
