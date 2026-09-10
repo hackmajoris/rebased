@@ -5,7 +5,7 @@
 </div>
 
 ![](screenshot.png)
-
+TEST
 ## Motivation
 
 Rebased is an open-source remake of the short-lived [jetbrains git client](https://youtrack.jetbrains.com/issue/IJPL-72504/Make-git-client-a-standalone-app#focus=Comments-27-12868395.0-0).
@@ -13,7 +13,7 @@ It's basically just a JetBrains IDE with all the bundled plugins removed except 
 
 See [this youtrack issue](https://youtrack.jetbrains.com/issue/IJPL-72504/Make-git-client-a-standalone-app) for the many reasons people have been requesting this for almost a decade. At the time of writing, it's the #3 most upvoted open issue on YouTrack.
 
-## Installation
+## Installationf
 
 ### Linux
 
@@ -108,6 +108,28 @@ Local Changes diffs get a per-line gutter "add comment" affordance, like a GitHu
 - **Finish Review** (Local Changes toolbar) exports all accumulated comments to `.git/review-comments.json` and clears the store.
 - `rebased review [<ref>]` opens a dedicated multi-file diff session for a whole changeset (uncommitted changes by default, or a ref/range), with its own Finish Review action.
 - Paired with the [`rebased-review`](https://github.com/hackmajoris/skills/blob/main/skills/rebased-review/SKILL.md) Claude Code skill, which drives a comment → fix → re-review loop end to end.
+
+#### Example workflow
+1. Make code changes, then ask Claude Code: "review my changes".
+2. The `rebased-review` skill checks `git status`, launches (or focuses) Rebased on the project, and tells you to open the diff.
+3. In Rebased: Local Changes → double-click a changed file (or "Show Diff"), leave inline comments via the gutter affordance, click **Finish Review**.
+4. This exports every comment to `.git/review-comments.json` and clears the store.
+5. Claude reads the export, maps each `{filePath, line, side, text}` entry to a `file:line` annotation, proposes fixes, and asks for approval before touching anything.
+6. Once approved, Claude applies the fixes and asks: "Fixes applied. Want another round of review, or is this good?"
+7. Leave more comments and repeat from step 3, or say "done" — Claude then closes Rebased (only if it launched it) and confirms the review is complete.
+
+Terminal alternative: `rebased review <ref>` opens a standalone multi-file diff session (e.g. for reviewing a whole branch), blocks until you close it, and exports to the same JSON file on its own Finish Review click.
+
+
+## In action
+
+<img width="1650" height="954" alt="Screenshot 2026-09-10 at 14 44 12" src="https://github.com/user-attachments/assets/b81dde8a-69e8-4c39-a857-2d7be6713e37" />
+<img width="1650" height="954" alt="Screenshot 2026-09-10 at 14 44 18" src="https://github.com/user-attachments/assets/e6fa5e4a-6d6a-4fe9-84bb-9e6c8e12b148" />
+<img width="1650" height="954" alt="Screenshot 2026-09-10 at 14 44 29" src="https://github.com/user-attachments/assets/9051d9f2-1951-4352-a259-fc69f96255ab" />
+<img width="1650" height="954" alt="Screenshot 2026-09-10 at 14 44 36" src="https://github.com/user-attachments/assets/4d1aeb3a-5966-4aa0-98cc-3418fb60aaac" />
+<img width="827" height="515" alt="Screenshot 2026-09-10 at 14 45 03" src="https://github.com/user-attachments/assets/a155ef79-304c-417f-a147-56063e64cf25" />
+<img width="827" height="515" alt="Screenshot 2026-09-10 at 14 46 44" src="https://github.com/user-attachments/assets/5305dc63-319e-45f1-8845-7d771dada7eb" />
+<img width="827" height="515" alt="Screenshot 2026-09-10 at 14 46 56" src="https://github.com/user-attachments/assets/b77898a0-0c23-4407-adfd-5baef41befd5" />
 
 ## Plugins
 
