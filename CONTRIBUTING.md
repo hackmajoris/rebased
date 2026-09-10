@@ -1,13 +1,5 @@
 # Contributing
 
-## AI Code Policy
-
-This project does not accept any AI generated code.
-
-Please also refrain from unnecessarily padding out your issues, comments or PR descriptions using LLMs. Though you may use AI to assist with translations if you aren't fluent in English.
-
-If you are interested in the motivation behind this decision, [see here](https://detachhead.codeberg.page/workproperly/blog/2026/07/21/i-dont-like-ai/).
-
 ## Getting the Source Code
 
 This section will guide you through getting the project sources and help avoid common issues in git config and other steps before opening it in the IDE.
@@ -23,7 +15,7 @@ This section will guide you through getting the project sources and help avoid c
 
 #### Clone Main Repository
 
-Rebased is available from the [GitHub repository](https://github.com/detachhead/rebased).
+Rebased is available from the [GitHub repository](https://github.com/hackmajoris/rebased).
 The **master** (_default_) branch contains the source code which is periodically merged with upstream, however Rebased tracks upstream IntelliJ Community releases in separate release branches. Releases are always published from the latest release branch instead of the master branch.
 [See below](#keeping-up-to-date-with-upstream) for more info.
 
@@ -32,7 +24,7 @@ You can [clone this project](https://www.jetbrains.com/help/idea/manage-projects
 Alternatively, follow the steps below in a terminal:
 
    ```
-   git clone https://github.com/detachhead/rebased.git
+   git clone https://github.com/hackmajoris/rebased.git
    cd rebased
    ```
 
@@ -150,7 +142,7 @@ the Rebased releases. I aim to do a release within a few days of the upstream re
 
 This section details how exactly I do upstream merges. This is primarily for my own reference and not really relevant to contributors. All
 you really need to know as a contributor is that if your change is specific to code not yet present in `master`, you may need to make your PR
-to [the current release branch](https://github.com/DetachHead/rebased/pulls?q=is%3Apr+label%3A%22release+branch%22) instead.
+to [the current release branch](https://github.com/hackmajoris/rebased/pulls?q=is%3Apr+label%3A%22release+branch%22) instead.
 
 ### How upstream merging works
 
