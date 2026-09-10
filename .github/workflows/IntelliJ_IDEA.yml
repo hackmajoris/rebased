@@ -1,11 +1,8 @@
 name: Rebased
 on:
-  # we have to run on push for all release branches and pull_request for everything else to avoid github's "feature" where it
-  # runs the CI on the merged state but also if there are conflicts it just silently doesn't run anything and doesn't tell you why...
+  # only build/release on tag pushes -- pull_request handles regular CI for master/release branches, and full
+  # installer builds on every ordinary push would burn macOS runner minutes for no benefit on a personal fork
   push:
-    branches:
-      - master
-      - release/*
     tags:
       - '*'
 
