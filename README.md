@@ -21,30 +21,24 @@ We recommend installing the AppImage with with [AppManager](https://github.com/k
 
 |Architecture|Install via AppManager|Manual Download|
 |-|-|-|
-|x86_64|[Install](https://detachhead.codeberg.page/urlwrapper/?url=appimg://install?url=https://github.com/DetachHead/rebased/releases/latest/download/Rebased-x86_64.AppImage)|[Download](https://github.com/DetachHead/rebased/releases/latest/download/Rebased-x86_64.AppImage)
-|aarch64|[Install](https://detachhead.codeberg.page/urlwrapper/?url=appimg://install?url=https://github.com/DetachHead/rebased/releases/latest/download/Rebased-aarch64.AppImage)|[Download](https://github.com/DetachHead/rebased/releases/latest/download/Rebased-aarch64.AppImage)
+|x86_64|[Install](https://detachhead.codeberg.page/urlwrapper/?url=appimg://install?url=https://github.com/hackmajoris/rebased/releases/latest/download/Rebased-x86_64.AppImage)|[Download](https://github.com/hackmajoris/rebased/releases/latest/download/Rebased-x86_64.AppImage)
+|aarch64|[Install](https://detachhead.codeberg.page/urlwrapper/?url=appimg://install?url=https://github.com/hackmajoris/rebased/releases/latest/download/Rebased-aarch64.AppImage)|[Download](https://github.com/hackmajoris/rebased/releases/latest/download/Rebased-aarch64.AppImage)
 
-Alternatively you can download the `.tar.gz` from [GitHub Releases](https://github.com/DetachHead/rebased/releases)
+Alternatively you can download the `.tar.gz` from [GitHub Releases](https://github.com/hackmajoris/rebased/releases)
 
 ### Windows
 
 |Architecture|Installer|Portable `.zip`|
 |-|-|-|
-|x86_64|[Download](https://github.com/DetachHead/rebased/releases/latest/download/rebased.exe)|[Download](https://github.com/DetachHead/rebased/releases/latest/download/rebased.win.zip)|
-|aarch64|[Download](https://github.com/DetachHead/rebased/releases/latest/download/rebased-aarch64.exe)|[Download](https://github.com/DetachHead/rebased/releases/latest/download/rebased-aarch64.win.zip)|
-
-Alternatively you can install via winget:
-
-```ps1
-winget install detachhead.rebased --source winget
-```
+|x86_64|[Download](https://github.com/hackmajoris/rebased/releases/latest/download/rebased.exe)|[Download](https://github.com/hackmajoris/rebased/releases/latest/download/rebased.win.zip)|
+|aarch64|[Download](https://github.com/hackmajoris/rebased/releases/latest/download/rebased-aarch64.exe)|[Download](https://github.com/hackmajoris/rebased/releases/latest/download/rebased-aarch64.win.zip)|
 
 ### macOS
 
 Install with [homebrew](https://brew.sh/):
 
 ```bash
-brew install detachhead/tap/rebased
+brew install hackmajoris/apps/rebased
 ```
 
 Alternatively you can download the `.dmg` manually:
@@ -61,8 +55,8 @@ Alternatively you can download the `.dmg` manually:
 
 |Architecture|Download|
 |-|-|
-|Apple Silicon (aarch64)|[Download](https://github.com/DetachHead/rebased/releases/latest/download/rebased-aarch64.dmg)|
-|Intel (x86_64)|[Download](https://github.com/DetachHead/rebased/releases/latest/download/rebased.dmg)|
+|Apple Silicon (aarch64)|[Download](https://github.com/hackmajoris/rebased/releases/latest/download/rebased-aarch64.dmg)|
+|Intel (x86_64)|[Download](https://github.com/hackmajoris/rebased/releases/latest/download/rebased.dmg)|
 
 ## Exclusive Features
 
@@ -90,26 +84,6 @@ To address this problem, Rebased allows you to disable the creation of the `.ide
 > [!NOTE]
 > This does not disable project-level config. Instead, Rebased will store each project's config inside a single centralized `.idea` directory in the same place as the IDE's global settings.
 
-### Diff review with inline comments
-
-Rebased ships a `review` CLI command that opens a multi-file diff viewer for a changeset --
-by default, your uncommitted changes, or a git ref/range you pass explicitly (e.g.
-`rebased review main..feature`):
-
-```bash
-rebased review [<ref>]
-```
-
-While the review window is open, click the gutter next to any line to leave an inline
-comment. When you're done, click "Finish Review" in the diff viewer toolbar to export every
-comment to `.git/review-comments.json` (relative to the repo root) and close the window.
-
-This is intended for consumption by coding-assistant tooling rather than for reading by
-hand: Rebased bundles a `diff-review` Claude Code skill (see `.claude/skills/diff-review` /
-`.agents/skills/diff-review`) that drives the whole loop -- launching the review, reading the
-exported comments, applying fixes, and relaunching for re-review -- so you can leave comments
-in the diff viewer and have an AI coding assistant act on them directly.
-
 ### Additional TextMate bundles
 
 IntelliJ Community Edition includes syntax highlighting for many languages, even when their corresponding language plugin is not installed, thanks to the [TextMate Bundles](https://plugins.jetbrains.com/plugin/7221) plugin.
@@ -120,7 +94,20 @@ One of the goals of Rebased is to prevent users from having to install bloated p
 
 - [vue](https://github.com/vuejs/language-tools)
 
-(currently only one language, but feel free to open an [issue](https://github.com/DetachHead/rebased/issues/new/choose) or [PR](https://github.com/DetachHead/rebased/compare) for others)
+(currently only one language, but feel free to open an [issue](https://github.com/hackmajoris/rebased/issues/new/choose) or [PR](https://github.com/hackmajoris/rebased/compare) for others)
+
+## Fork Features
+
+Features added in this fork ([hackmajoris/rebased](https://github.com/hackmajoris/rebased)) that aren't in upstream. New features land here going forward.
+
+### Inline diff review comments
+
+Local Changes diffs get a per-line gutter "add comment" affordance, like a GitHub/GitLab PR review, instead of being read-only. Double-click a changed file (or "Show Diff") to open it.
+
+- Comments accumulate in a project-wide store as diffs are opened — no dedicated "start review" action needed.
+- **Finish Review** (Local Changes toolbar) exports all accumulated comments to `.git/review-comments.json` and clears the store.
+- `rebased review [<ref>]` opens a dedicated multi-file diff session for a whole changeset (uncommitted changes by default, or a ref/range), with its own Finish Review action.
+- Paired with the [`rebased-review`](https://github.com/hackmajoris/skills/blob/main/skills/rebased-review/SKILL.md) Claude Code skill, which drives a comment → fix → re-review loop end to end.
 
 ## Plugins
 
