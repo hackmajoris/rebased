@@ -1,0 +1,52 @@
+<idea-plugin>
+  <name>Git Review Comments</name>
+  <id>intellij.vcs.git.review.comments</id>
+  <category>Version Controls</category>
+  <vendor>JetBrains</vendor>
+  <description><![CDATA[
+    Adds a per-line gutter "add comment" affordance and visible inline comments (like a
+    GitHub/GitLab PR review) directly to Rebased's ordinary diff viewers -- double-click a
+    changed file in Local Changes, or "Show Diff" -- with no dedicated action needed. Click
+    "Finish Review" in the Local Changes toolbar to export accumulated comments to a JSON
+    file, for consumption by external tooling (e.g. an AI coding assistant skill). A separate
+    <code>review</code> CLI command opens the same comment UI for a whole changeset from a
+    terminal, with its own "Finish Review" action in that session's diff toolbar.
+  ]]></description>
+
+  <content namespace="jetbrains"/>
+
+  <dependencies>
+    <!-- region Generated dependencies - run `Generate Product Layouts` to regenerate -->
+    <module name="intellij.platform.diff"/>
+    <module name="intellij.platform.diff.impl"/>
+    <module name="intellij.platform.collaborationTools"/>
+    <module name="intellij.platform.vcs.impl"/>
+    <module name="intellij.platform.util.diff"/>
+    <module name="intellij.platform.ide.impl"/>
+    <module name="intellij.platform.ide"/>
+    <module name="intellij.platform.ide.core"/>
+    <module name="intellij.platform.projectModel"/>
+    <module name="intellij.platform.core.ui"/>
+    <module name="intellij.platform.editor.ui"/>
+    <module name="intellij.platform.util.ui"/>
+    <!-- endregion -->
+  </dependencies>
+
+  <resource-bundle>messages.GitReviewCommentsBundle</resource-bundle>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <diff.DiffExtension implementation="com.intellij.vcs.git.review.comments.ReviewDiffExtension"/>
+    <appStarter id="review" implementation="com.intellij.vcs.git.review.comments.ReviewApplication"
+                bundle="messages.GitReviewCommentsBundle" key="review.help"/>
+    <projectService serviceImplementation="com.intellij.vcs.git.review.comments.ProjectReviewCommentStore"/>
+  </extensions>
+
+  <actions>
+    <action id="Git.Review.FinishReview" class="com.intellij.vcs.git.review.comments.FinishReviewAction">
+      <add-to-group group-id="Diff.ViewerToolbar" anchor="last"/>
+    </action>
+    <action id="Git.Review.FinishGlobalReview" class="com.intellij.vcs.git.review.comments.FinishGlobalReviewAction">
+      <add-to-group group-id="ChangesViewToolbar" anchor="after" relative-to-action="Diff.ShowDiff"/>
+    </action>
+  </actions>
+</idea-plugin>
