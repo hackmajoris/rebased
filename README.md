@@ -13,7 +13,7 @@ It's basically just a JetBrains IDE with all the bundled plugins removed except 
 
 See [this youtrack issue](https://youtrack.jetbrains.com/issue/IJPL-72504/Make-git-client-a-standalone-app) for the many reasons people have been requesting this for almost a decade. At the time of writing, it's the #3 most upvoted open issue on YouTrack.
 
-## Installationf
+## Installation
 
 ### Linux
 
