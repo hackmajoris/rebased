@@ -38,8 +38,11 @@ Alternatively you can download the `.tar.gz` from [GitHub Releases](https://gith
 Install with [homebrew](https://brew.sh/):
 
 ```bash
+brew trust hackmajoris/apps
 brew install hackmajoris/apps/rebased
 ```
+
+`brew trust` is needed once per tap the first time you install a cask from it -- without it you'll see `Refusing to load cask hackmajoris/apps/rebased from untrusted tap hackmajoris/apps.`
 
 Alternatively you can download the `.dmg` manually:
 
