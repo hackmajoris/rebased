@@ -117,6 +117,7 @@ jps_test(
 exports_files(
     [
         "intellij.vcs.git.review.comments.iml",
+        "resources/META-INF/plugin.xml",
     ],
     visibility = ["//visibility:public"],
 )
