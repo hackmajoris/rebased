@@ -5,7 +5,7 @@
 </div>
 
 ![](screenshot.png)
-TEST
+
 ## Motivation
 
 Rebased is an open-source remake of the short-lived [jetbrains git client](https://youtrack.jetbrains.com/issue/IJPL-72504/Make-git-client-a-standalone-app#focus=Comments-27-12868395.0-0).
@@ -13,7 +13,7 @@ It's basically just a JetBrains IDE with all the bundled plugins removed except 
 
 See [this youtrack issue](https://youtrack.jetbrains.com/issue/IJPL-72504/Make-git-client-a-standalone-app) for the many reasons people have been requesting this for almost a decade. At the time of writing, it's the #3 most upvoted open issue on YouTrack.
 
-## Installationf
+## Installation
 
 ### Linux
 
@@ -38,8 +38,11 @@ Alternatively you can download the `.tar.gz` from [GitHub Releases](https://gith
 Install with [homebrew](https://brew.sh/):
 
 ```bash
+brew trust hackmajoris/apps
 brew install hackmajoris/apps/rebased
 ```
+
+`brew trust` is needed once per tap the first time you install a cask from it -- without it you'll see `Refusing to load cask hackmajoris/apps/rebased from untrusted tap hackmajoris/apps.`
 
 Alternatively you can download the `.dmg` manually:
 
