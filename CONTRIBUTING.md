@@ -148,7 +148,15 @@ replicate that machinery here -- we just periodically merge upstream's `master` 
    tags) may already reference, and rebasing would rewrite history that's been tagged.
 3. Resolve any conflicts against this fork's own changes (currently just the `git-review-comments` plugin module and doc updates) --
    the conflict surface should stay small since those changes are additive rather than modifying shared upstream code.
-4. To cut a release, tag the resulting commit on `master` (see [`.github/workflows/IntelliJ_IDEA.yml`](.github/workflows/IntelliJ_IDEA.yml)
+4. Check the fork-identity overrides below -- upstream owns these files and a merge won't conflict unless upstream happens to touch
+   the exact same line, so a silent regression back to upstream's identity is possible without a conflict to flag it:
+   - `platform/platform-impl/update-checker/src/com/intellij/openapi/updateSettings/impl/UpdateChecker.kt` -- `loadProductData()`'s
+     GitHub releases API URL must point at `hackmajoris/rebased`, not `detachHead/rebased` (drives the in-app "update available" check).
+   - `community-resources/resources/idea/RebasedApplicationInfo.xml` -- `<company name="..." url="...">` must be `hackmajoris`, not
+     `detachhead` (About dialog attribution; also determines the OS settings/config directory name).
+   - `idea/customization/base/src/RebasedExternalResourceUrls.kt` -- `productPageUrl` must point at `github.com/hackmajoris/rebased`,
+     not `detachhead/rebased` (drives "visit product page" / bug report links).
+5. To cut a release, tag the resulting commit on `master` (see [`.github/workflows/IntelliJ_IDEA.yml`](.github/workflows/IntelliJ_IDEA.yml)
    for what a tag push triggers).
 
 No separate `262`-style intermediary branches or `release/*` branches -- those exist upstream to track many parallel IntelliJ versions
