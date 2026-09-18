@@ -1,6 +1,6 @@
 <component xmlns="http://jetbrains.org/intellij/schema/application-info">
   <version major="__MAJOR_VERSION__" minor="__MINOR_VERSION__"/>
-  <company name="detachhead" url="https://github.com/detachhead"/>
+  <company name="hackmajoris" url="https://github.com/hackmajoris"/>
   <build number="IC-__BUILD__" date="__BUILD_DATE__"/>
   <logo url="/idea_community_logo.png"/>
   <icon svg="/rebased.svg" svg-small="/rebased_16.svg"/>
