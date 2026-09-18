@@ -76,6 +76,7 @@ jvm_library(
         "//platform/testFramework",
         "//platform/pluginSystem/parser/impl:impl",
         "//platform/util/xmlDom",
+        "//libraries/junit4",
     ],
     runtime_deps = [
         # do not sort,
@@ -98,6 +99,7 @@ jvm_library(
         "//platform/testFramework:testFramework_test_lib",
         "//platform/pluginSystem/parser/impl:impl_test_lib",
         "//platform/util/xmlDom:xmlDom_test_lib",
+        "//libraries/junit4:junit4_test_lib",
     ],
 )
 ### auto-generated section `build intellij.vcs.git.review.comments` end
